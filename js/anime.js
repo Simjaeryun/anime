@@ -3,7 +3,7 @@ const box = document.querySelector('#box');
 
 btn.addEventListener('click', e => {
     anime(box, {
-        prop: 'margin-left',
+        prop: 'left',
         value: '10%',
         duration: 2000
     });
@@ -19,9 +19,27 @@ function anime(selector, option) {
     //속성값이 문자열이면  %처리를 하기 위해 option.value값을 실수로 보정
     let isString = typeof option.value;
     if (isString === 'string') {
-        //px단위로 연산된 currentValue값을 다시 백분율로 변환처리
-        const winW = window.innerWidth;
-        currentValue = (currentValue / winW) * 100;
+        //부모요소의 가로폭을 기준으로 백분율 변환해야하는 모든속성을 배열에담아
+        //해당 배열의 개수만큼 반복을 돌면서 조건문처리 
+        const x = ['margin-left', 'margin-right', 'left', 'right', 'width'];
+        //부모요소의 세로폭을 기준으로 백분율 변환해야하는 모든속성을 배열에담아
+        //해당 배열의 개수만큼 반복을 돌면서 조건문처리 
+        const y = ['margin-top', 'margin-bottom', 'top', 'bottom', 'height'];
+
+        for (let condition of x) {
+            if (option.prop === condition) {
+                const parentW = parseInt(getComputedStyle(selector.parentElement).width);
+                currentValue = (currentValue / parentW) * 100;
+            }
+        }
+        for (let condition of y) {
+            if (option.prop === condition) {
+                const parentH = parseInt(getComputedStyle(selector.parentElement).height);
+                currentValue = (currentValue / parentH) * 100;
+            }
+        }
+
+
         option.value = parseFloat(option.value);
     }
 

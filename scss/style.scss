@@ -1,9 +1,19 @@
 @charset "UTF-8";
 @import "reset.scss";
 
+.wrap {
+	width: 1000px;
+	height: 500px;
+	border: 1px solid #ddd;
+	position: relative;
+	margin: 100px auto;
+}
 #box {
 	width: 100px;
 	height: 100px;
 	background: aqua;
-	margin-left: 500px;
+
+	position: absolute;
+	top: 20%;
+	left: 20%;
 }
